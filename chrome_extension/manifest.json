@@ -1,0 +1,28 @@
+{
+    "name": "Detoxify",
+    "version": "1.0",
+    "description": "",
+    "permissions": ["https://www.youtube.com/*", "http://tatianag.pythonanywhere.com/*", 
+                    "activeTab", "webRequest", "tabs"],
+
+    
+    "content_scripts": [ {
+      "all_frames": true,
+      "js": [ "jquery-3.4.1.js", "main.js" ],
+      "matches": [ "https://www.youtube.com/watch*" ],
+      "run_at": "document_end"
+   } ],
+
+    "commands": {
+      "detoxify": {
+         "description": "detoxify"
+      }
+   },
+
+    "browser_action": {
+      "default_popup": "panel.html",
+      "default_title": "Detoxify"
+   },
+
+    "manifest_version": 2
+  }
