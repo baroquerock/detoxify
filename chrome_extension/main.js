@@ -11,6 +11,18 @@ const CATEGORIES_HUMAN = {'severe_toxicity': 'severe toxicity', 'obscene': 'obsc
                       'threat': 'threat', 'sexual_explicit': 'sexually explicit content'};
 
 
+
+/* This is purely for testing
+let comment = {'comment': 'I will kill you'};  
+
+$.post(url, comment, function(data) {
+  if (data['success'] === 'true') {
+    console.log(data['target']);
+    console.log(data['severe_toxicity']);
+  };
+});
+*/
+
 observers = {'detox': null}
 
 
@@ -149,11 +161,18 @@ const resetToxicity = () => {
 };
 
 
+
+/* this part of the extension was built with the 'herp-derp-for-youtube' extension in mind:
+   https://chrome.google.com/webstore/detail/herp-derp-for-youtube/ioomnmgjblnnolpdgdhebainmfbipjoh
+   eternally gratefull!
+
+*/
 const checkCommentsLoaded = () => {
 
   console.log('in checkCommentsLoaded')
 
   setTimeout(() => {
+    // Original comment from 'herp-derp-for-youtube' author (thanks!):
     // This selector is awful, but Youtube re-uses a lot of the DOM (the selector for the comments is re-used across a bunch of pages) so we need the exact path to the comments to match
     const commentsSection = document.querySelector(
       "html body ytd-app div#content.style-scope.ytd-app ytd-page-manager#page-manager.style-scope.ytd-app ytd-watch-flexy.style-scope.ytd-page-manager.hide-skeleton div#columns.style-scope.ytd-watch-flexy div#primary.style-scope.ytd-watch-flexy div#primary-inner.style-scope.ytd-watch-flexy ytd-comments#comments.style-scope.ytd-watch-flexy ytd-item-section-renderer#sections.style-scope.ytd-comments div#contents.style-scope.ytd-item-section-renderer"
