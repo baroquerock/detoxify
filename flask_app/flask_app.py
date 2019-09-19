@@ -10,11 +10,11 @@ from utils import preprocess
 app = Flask(__name__)
 CORS(app)
 
-MAX_LEN = 250
 TOK_PATH = F"/home/TatianaG/mysite/tokenizer.pickle"
 MODEL_PATH = F"/home/TatianaG/mysite/model.pt"
 
-CATEGORIES = ['target', 'severe_toxicity', 'obscene', 'identity_attack', 'insult', 'threat', 'sexual_explicit']
+CATEGORIES_TOXIC = ['target', 'severe_toxicity', 'obscene', 'identity_attack', 'insult', 'threat', 'sexual_explicit']
+#CATEGORIES_IDENTITY = ['race', 'religion', 'sexuality', 'gender', 'disability']
 
 with open(TOK_PATH, 'rb') as f:
     tokenizer = pickle.load(f)
@@ -22,7 +22,7 @@ with open(TOK_PATH, 'rb') as f:
 max_features = len(tokenizer.word_index)
 
 state_dict = torch.load(MODEL_PATH, map_location='cpu')
-model = ToxicLSTM(6, max_features, 300)
+model = ToxicLSTM(max_features)
 model.load_state_dict(state_dict['state_dict'])
 model.eval()
 
@@ -32,10 +32,10 @@ def getPredictions(comments, model):
   try:
 
     comments = torch.tensor(comments, dtype=torch.long)
-    out = model(comments)
-    out = torch.sigmoid(out).tolist()[0]
+    toxicity, identities = model(comments)
+    out = torch.sigmoid(toxicity).tolist()[0]
     out = ["{:.2f}".format(y) for y in out]
-    out = dict(zip(CATEGORIES, out))
+    out = dict(zip(CATEGORIES_TOXIC, out))
     out['success'] = 'true'
     return out
 
