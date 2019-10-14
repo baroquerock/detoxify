@@ -1,6 +1,8 @@
 # detoxify
 Chrome extension which detects, classifies and highlights toxic comments under Youtube videos
 
+[Devpost Link](https://devpost.com/software/detoxify-gals9i)
+
 There are three parts in the application:
 
 1. [Modelling](notebooks/)
